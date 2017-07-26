@@ -41,9 +41,26 @@ if(b === "spotify-this-song"){
 //Twitter call: did not do due to phone number/api call issue
 else if (b === 'my-tweet') {
   console.log("tada2");
+
 //Movie/OMDB call
 }else if (b === 'movie-this') {
-
+  var link = "http://www.omdbapi.com/?t="+process.argv[3]+"&y=&plot=short&apikey=40e9cece";
+  console.log(link);
+  request(link, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log(JSON.parse(body).Title);
+      console.log(JSON.parse(body).Year);
+      console.log("Movie rating: " + JSON.parse(body).imdbRating);
+      console.log("Rotten rating: " + JSON.parse(body).tomatoRating);
+      console.log(JSON.parse(body).Language);
+      console.log("Plot: " + JSON.parse(body).Plot);
+      console.log("Actors:" + JSON.parse(body).Actors);
+    }
+    else {
+      //when this is all a function, rerun with the search variable to mr.nobody
+    }
+  });
+//will have to put everything into a function and recursively call
 }else if (b === 'do-what-it-says') {
   fs.readFile("random.txt", "utf8", function(err, data) {
     if (err) {
